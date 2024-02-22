@@ -3,9 +3,9 @@ from Enemy import Enemy
 
 class EnemySpawner:
     def __init__(self):
-        self.enemyes = [Enemy(5, 100, 100), Enemy(5, 500, 400)]
+        self.enemyes = []
     def spawn(self):
         speed = random.randint(1, 10)
         startY = random.randint(50, 1030)
         
-        self.enemyes.append(Enemy(speed, 0, startY))
+        self.enemyes.append(Enemy(1, 50, 0, startY))

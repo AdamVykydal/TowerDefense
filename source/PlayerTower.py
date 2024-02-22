@@ -12,4 +12,4 @@ class PlayerTower:
         self.y -= self.speedUp
         self.y += self.speedDown
     def fire(self):
-        self.Bullets.append(Bullet(30, self.x, self.y))
+        self.Bullets.append(Bullet(30, 10, 1, self.x, self.y))
