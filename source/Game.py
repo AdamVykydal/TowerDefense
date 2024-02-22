@@ -3,13 +3,14 @@ from exitGame import exitGame
 from PlayerTower import PlayerTower
 from Renderer import Renderer
 from HandleInput import HandleInput
-from Enemy import Enemy
 from manageBullets import ManageBullets
+from manageEnemyes import ManageEnemyes
+from EnemySpawner import EnemySpawner
 
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode()
+        self.screen = pygame.display.set_mode((1920, 1080))
         self.screenW, self.screenH = pygame.display.get_surface().get_size()
         self.clock = pygame.time.Clock()
         self.exitGame = exitGame()
@@ -21,8 +22,9 @@ class Game:
         self.playerTower = PlayerTower(self.playerTowerTexture, self.playerTowerX, self.playerTowerY)
         self.renderer = Renderer()
         self.handleInput = HandleInput(self.playerTower)
-        self.enemyes = [Enemy(5, 100, 100), Enemy(5, 500, 400)]
         self.manageBullets = ManageBullets(self.screen, self.renderer, self.bulletTexture) 
+        self.manageEnemyes = ManageEnemyes(self.screen, self.renderer, self.playerTowerTexture)
+        self.enemySpawner = EnemySpawner()
 
     
     def run(self):
@@ -34,9 +36,8 @@ class Game:
             self.handleInput.check(events)
             self.playerTower.move()
             self.renderer.render(self.screen, self.playerTower.texture, self.playerTower.x, self.playerTower.y)
-            self.manageBullets.manage(self.playerTower.Bullets, self.enemyes)
-            for enemy in self.enemyes:
-                enemy.move()
-                self.renderer.render(self.screen, self.playerTower.texture, enemy.x, enemy.y)
+            self.manageBullets.manage(self.playerTower.Bullets, self.enemySpawner)
+            self.manageEnemyes.manage(self.enemySpawner.enemyes)
+    
             
             pygame.display.update()
